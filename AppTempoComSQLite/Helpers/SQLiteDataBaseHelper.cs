@@ -1,37 +1,37 @@
-﻿using MauiAppTempoSQLite.Models;
+﻿using AppTempoComSQLite.Models;
 using SQLite;
 
-namespace MauiAppTempoSQLite.Helpers
+namespace AppTempoComSQLite.Helpers
 {
-    public class SQLiteDatabaseHelper
+    public class SQLiteDataBaseHelper
     {
-        readonly SQLiteAsyncConnection _conn;//Cria a conexão assincrona e o _conn mantem ela aberta
+        readonly SQLiteAsyncConnection _conn;
 
-        public SQLiteDatabaseHelper(string path)
+        public SQLiteDataBaseHelper(string path)
         {
-            _conn = new SQLiteAsyncConnection(path);//Cria a tabela Tempo
-            _conn.CreateTableAsync<Tempo>().Wait();//Força a conexão assincrona, garantindo que a tabela esteja pronta antes de seguir
+            _conn = new SQLiteAsyncConnection(path);
+            _conn.CreateTableAsync<Tempo>().Wait();
         }
 
-        public Task<int> Inserir(Tempo p)//insere valores
+        public Task<int> Inserir(Tempo p)
         {
             return _conn.InsertAsync(p);
         }
 
-        public Task<int> Deletar(int id)//deleta valores
+        public Task<int> Deletar(int id)
         {
             return _conn.Table<Tempo>().DeleteAsync(i => i.Id == id);
         }
 
-        public Task<List<Tempo>> PesquiserTudo()//busca todos os dados da tabela e os retorna
+        public Task<List<Tempo>> PesquisarTudo()
         {
             return _conn.Table<Tempo>().ToListAsync();
         }
 
-        public Task<List<Tempo>> Pesquisar(string q)// pesquisa dados especificos da tabela e os retorna
+        public Task<List<Tempo>> Pesquisar(string q)
         {
             string sql = "SELECT * FROM Tempo " +
-                         "WHERE description LIKE '%" + q + "%'";
+                         "WHERE Descricao LIKE '%" + q + "%'";
 
             return _conn.QueryAsync<Tempo>(sql);
         }

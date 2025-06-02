@@ -1,13 +1,13 @@
-﻿using MauiAppTempoSQLite.Models;
+﻿using AppTempoComSQLite.Models;
 using Newtonsoft.Json.Linq;
 
-namespace MauiAppTempoSQLite.Services
+namespace AppTempoComSQLite.Services
 {
     public class DataService
     {
-        public static async Task<Tempo?> PegarPrevisao(string cidade)//recebe cidade para achar previsão
+        public static async Task<Tempo?> PegarPrevisao(string cidade)
         {
-            //acesso a API
+ 
             Tempo? t = null;
 
             string chave = "6135072afe7f6cec1537d5cb08a5a1a2";
@@ -15,21 +15,21 @@ namespace MauiAppTempoSQLite.Services
             string url = $"https://api.openweathermap.org/data/2.5/weather?" +
                          $"q={cidade}&units=metric&appid={chave}";
 
-            using (HttpClient cliente = new HttpClient())//cria instancia HTTP
+            using (HttpClient cliente = new HttpClient())
             {
                 HttpResponseMessage resp = await cliente.GetAsync(url);
 
-                if (resp.IsSuccessStatusCode)//verifica se foi bem sucedido
+                if (resp.IsSuccessStatusCode)
                 {
                     string json = await resp.Content.ReadAsStringAsync();
 
                     var rascunho = JObject.Parse(json);
 
                     DateTime temp = new();
-                    DateTime NascSol = temp.AddSeconds((double)rascunho["sys"]["sunrise"]).ToLocalTime();
-                    DateTime PorSol = temp.AddSeconds((double)rascunho["sys"]["sunset"]).ToLocalTime();
+                    DateTime NascSol = temp.AddSeconds((double)rascunho["sys"]["NascSol"]).ToLocalTime();
+                    DateTime PorSol = temp.AddSeconds((double)rascunho["sys"]["PorSol"]).ToLocalTime();
 
-                    t = new()//cria o objeto tempo
+                    t = new()
                     {
                         lat = (double)rascunho["coord"]["lat"],
                         lon = (double)rascunho["coord"]["lon"],
@@ -45,7 +45,7 @@ namespace MauiAppTempoSQLite.Services
                 }
             }
 
-            return t;//retorna objeto
+            return t;
         }
     }
 }
