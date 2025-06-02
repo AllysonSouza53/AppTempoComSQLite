@@ -25,7 +25,7 @@ namespace AppTempoComSQLite.Helpers
 
         public Task<List<Tempo>> PesquisarTudo()
         {
-            return _conn.Table<Tempo>().ToListAsync();
+            return _conn.Table<Tempo>().OrderByDescending(i => i.Id).ToListAsync();
         }
 
         public Task<List<Tempo>> Pesquisar(string q)

@@ -74,9 +74,9 @@
                                         <Label Grid.Column="0" Text="{Binding Id}" Padding="5" />
                                         <Label Grid.Column="1" Text="{Binding Cidade}" Padding="5" />
                                         <Label Grid.Column="2" Text="{Binding DataConsulta}" Padding="5" />
-                                        <Label Grid.Column="3" Text="{Binding description}" />
-                                        <Label Grid.Column="4" Text="{Binding temp_max}" />
-                                        <Label Grid.Column="5" Text="{Binding temp_min}" />
+                                        <Label Grid.Column="3" Text="{Binding Descricao}" />
+                                        <Label Grid.Column="4" Text="{Binding TempMax}" />
+                                        <Label Grid.Column="5" Text="{Binding TempMin}" />
                                     </Grid>
                                 </ViewCell>
                             </DataTemplate>
